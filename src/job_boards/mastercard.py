@@ -9,9 +9,7 @@ import jmespath
 import parsel
 
 logger = logging.getLogger(__name__)
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
+
 URL = "https://careers.mastercard.com/us/en/bogota-colombia"
 
 
