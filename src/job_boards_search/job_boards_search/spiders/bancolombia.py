@@ -19,7 +19,7 @@ class BancolombiaSpider(scrapy.Spider):
         jobLocations = response.css(".jobLocation::text").getall()
         JobDates = response.css(".jobDate::text").getall()[2:]
 
-        for i in range(len(jobTitles)):
+        for i in range(5):
             item = JobBoardsItem()
             item["company"] = "Bancolombia"
             item["title"] = jobTitles[i].strip()

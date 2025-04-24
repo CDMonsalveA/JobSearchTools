@@ -90,46 +90,45 @@ def delete_old_file(filepath: str) -> None:
 if not os.path.exists("old.jsonl"):
     crawl_job_boards("old.jsonl")
 
-while True:
-    print("-------------------------------------------------------------------")
-    print("Checking for updates...")
-    print("-------------------------------------------------------------------")
-    crawl_job_boards("new.jsonl")
-    # check for differences between old.jsonl and new.jsonl
-    with (
-        open("old.jsonl", "r", encoding="utf-8") as old_file,
-        open("new.jsonl", "r", encoding="utf-8") as new_file,
-    ):
-        old_data = list(old_file)
-        new_data = list(new_file)
-    jsonl_old = [json.loads(line) for line in old_data]
-    jsonl_new = [json.loads(line) for line in new_data]
+print("-------------------------------------------------------------------")
+print("Checking for updates...")
+print("-------------------------------------------------------------------")
+crawl_job_boards("new.jsonl")
+# check for differences between old.jsonl and new.jsonl
+with (
+    open("old.jsonl", "r", encoding="utf-8") as old_file,
+    open("new.jsonl", "r", encoding="utf-8") as new_file,
+):
+    old_data = list(old_file)
+    new_data = list(new_file)
+jsonl_old = [json.loads(line) for line in old_data]
+jsonl_new = [json.loads(line) for line in new_data]
 
-    # Compare the two files and find new job postings
-    new_job_postings = []
-    for new_job in new_data:
-        if new_job not in old_data:
-            new_job_postings.append(new_job)
+# Compare the two files and find new job postings
+new_job_postings = []
+for new_job in new_data:
+    if new_job not in old_data:
+        new_job_postings.append(new_job)
 
-    if new_job_postings != []:
-        logger.info(f"New job postings found: {len(new_job_postings)}")
-        for job in new_job_postings:
-            logger.info(f"New job posting: {job}")
-            # Open the job posting link in a web browser
-            job = json.loads(job)
-            if "url" not in job:
-                logger.warning("No link found in the job posting.")
-                continue
-            chrome_path = (
-                "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s"
-            )
-            webbrowser.open(job.get("url"))
-    else:
-        logger.info("No new job postings found.")
+if new_job_postings != []:
+    logger.info(f"New job postings found: {len(new_job_postings)}")
+    for job in new_job_postings:
+        logger.info(f"New job posting: {job}")
+        # Open the job posting link in a web browser
+        job = json.loads(job)
+        if "url" not in job:
+            logger.warning("No link found in the job posting.")
+            continue
+        webbrowser.open(job.get("url"))
+else:
+    logger.info("No new job postings found.")
 
-    # Move new.jsonl to old.jsonl
-    delete_old_file("old.jsonl")
-    os.rename("new.jsonl", "old.jsonl")
-    logger.info("Moved new.jsonl to old.jsonl")
+# Move new.jsonl to old.jsonl
+delete_old_file("old.jsonl")
+os.rename("new.jsonl", "old.jsonl")
+logger.info("Moved new.jsonl to old.jsonl")
 
-    time.sleep(60)  # Sleep for 10 minutes
+
+# Solution at https://stackoverflow.com/questions/41495052/scrapy-reactor-not-restartable
+# to avoid the reactor already started error
+# twisted.internet.error.ReactorNotRestartable

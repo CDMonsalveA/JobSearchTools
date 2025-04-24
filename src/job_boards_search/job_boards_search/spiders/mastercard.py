@@ -15,6 +15,8 @@ class MastercardSpider(scrapy.Spider):
         data = response.css("script").re_first(r"phApp\.ddo\s*=\s*({.*?});", default="")
         data = json.loads(data)
         jobs = jmespath.search("eagerLoadRefineSearch.data.jobs", data)
+        #Only get the first 5 jobs
+        jobs = jobs[:5]
         for job in jobs:
             item = JobBoardsItem()
             item["company"] = "Mastercard"
