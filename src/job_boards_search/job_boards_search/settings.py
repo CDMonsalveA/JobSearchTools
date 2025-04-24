@@ -27,7 +27,7 @@ ROBOTSTXT_OBEY = False
 # See also autothrottle settings and docs
 # DOWNLOAD_DELAY = 3
 # The download delay setting will honor only one of:
-# CONCURRENT_REQUESTS_PER_DOMAIN = 16
+CONCURRENT_REQUESTS_PER_DOMAIN = 1
 # CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
@@ -97,3 +97,11 @@ TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 # Set settings whose default value is deprecated to a future-proof value
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
+
+FEEDS = {
+    "output.jsonl": {
+        "format": "jsonl",
+        "overwrite": True,
+        "encoding": "utf-8",
+    },
+}

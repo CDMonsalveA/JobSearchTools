@@ -3,6 +3,16 @@
         "tests"
     ],
     "python.testing.unittestEnabled": false,
-    "python.testing.pytestEnabled": true
-
+    "python.testing.pytestEnabled": true,
+    "black-formatter.args": [
+        "--line-length",
+        "80"
+    ],
+    // Editor
+    "editor.rulers": [
+        60,
+        80,
+        120
+    ],
+    "python.analysis.typeCheckingMode": "standard",
 }

@@ -40,6 +40,7 @@ def MasterCardLastJobPosting():
     jobs = jmespath.search("eagerLoadRefineSearch.data.jobs", data)
     # Extract the last job posting
     last_job_posting = jobs[0] if jobs else None
+    last_job = None  # Initialize last_job to None
     if last_job_posting:
         # Extract the relevant information from the job posting
         title = last_job_posting.get("title")
@@ -52,5 +53,6 @@ def MasterCardLastJobPosting():
         logger.info(f"Last Job Posting on Mastercard: {title}, {jobId}, {postedDate}")
     else:
         print("No job postings found.")
+        last_job = None  # Set last_job to None if no job postings are found
 
     return last_job

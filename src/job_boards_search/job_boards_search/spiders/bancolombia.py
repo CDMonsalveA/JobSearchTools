@@ -6,7 +6,7 @@ import scrapy
 from ..items import JobBoardsItem
 
 
-class MastercardSpider(scrapy.Spider):
+class BancolombiaSpider(scrapy.Spider):
     name = "bancolombia"
     allowed_domains = ["empleo.grupobancolombia.com/"]
     start_urls = [
