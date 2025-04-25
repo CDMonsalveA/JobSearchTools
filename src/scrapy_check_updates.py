@@ -123,7 +123,10 @@ if new_job_postings != []:
         if "url" not in job:
             logger.warning("No link found in the job posting.")
             continue
-        webbrowser.open(job.get("url"))
+        chrome_path = "C:/Program Files/Google/Chrome/Application/chrome.exe"
+        webbrowser.register("chrome", None, webbrowser.BackgroundBrowser(chrome_path))
+        webbrowser.get("chrome").open(job.get("url"))
+        # webbrowser.open(job.get("url"))
 else:
     logger.info("No new job postings found.")
 
