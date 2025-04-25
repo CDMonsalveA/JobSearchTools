@@ -12,6 +12,8 @@ BOT_NAME = "job_boards_search"
 SPIDER_MODULES = ["job_boards_search.spiders"]
 NEWSPIDER_MODULE = "job_boards_search.spiders"
 
+LOG_LEVEL = "INFO"
+LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = "job_boards_search (+http://www.yourdomain.com)"

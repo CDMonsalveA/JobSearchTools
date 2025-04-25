@@ -30,6 +30,8 @@ class VisaSpider(scrapy.Spider):
             "https": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
         },
         "TWISTED_REACTOR": "twisted.internet.asyncioreactor.AsyncioSelectorReactor",
+        "LOG_LEVEL": "INFO",
+        "LOG_FORMAT": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     }
 
     def start_requests(self):

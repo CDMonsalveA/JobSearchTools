@@ -35,6 +35,7 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 # Set up the path to the project directory
 project_dir = os.path.dirname(os.path.abspath(__file__))
