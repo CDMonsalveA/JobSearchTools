@@ -1,5 +1,0 @@
-2025-04-24 18:42:06,223 - INFO - Current working directory: C:\Users\User\Documents\Proyectos\JobSearchTools
-2025-04-24 18:42:06,474 - ERROR - Error executing src/scrapy_check_updates.py: Command '['python', 'src/scrapy_check_updates.py']' returned non-zero exit status 1.
-2025-04-24 18:42:37,175 - INFO - Current working directory: C:\Users\User\Documents\Proyectos\JobSearchTools
-2025-04-24 18:42:37,413 - ERROR - Error executing src/scrapy_check_updates.py: Command '['python', 'src/scrapy_check_updates.py']' returned non-zero exit status 1.
-2025-04-24 18:47:44,803 - INFO - Current working directory: C:\Users\User\Documents\Proyectos\JobSearchTools
