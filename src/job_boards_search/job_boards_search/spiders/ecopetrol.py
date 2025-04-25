@@ -32,7 +32,7 @@ class EcopetrolSpider(scrapy.Spider):
         self.logger.info(f"jobLocations: {jobLocations}")
         self.logger.info(f"jobDates: {jobDates}")
 
-        for i in range(5):
+        for i in range(min(5, len(jobTitles))):
             item = JobBoardsItem()
             item["company"] = "Ecopetrol"
             item["title"] = jobTitles[i].strip()

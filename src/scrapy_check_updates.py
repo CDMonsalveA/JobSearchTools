@@ -54,6 +54,8 @@ def crawl_job_boards(filepath: str) -> None:
 
     settings = get_project_settings()
     settings.set("SPIDER_MODULES", ["job_boards_search.spiders"])
+    settings.set("NEWSPIDER_MODULE", "job_boards_search.spiders")
+    settings.set("LOG_LEVEL", "INFO")
     settings.set(
         "FEEDS",
         {
@@ -68,6 +70,7 @@ def crawl_job_boards(filepath: str) -> None:
     spiders_names = process.spider_loader.list()
     print(f"Spiders found: {spiders_names}")
     for spider_name in spiders_names:
+        print(f"Running spider: {spider_name} -------------------------------------------")
         process.crawl(spider_name)
     process.start()
     logger.info(f"Crawled job boards and saved results to {filepath}")

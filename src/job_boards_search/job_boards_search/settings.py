@@ -55,11 +55,11 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 1
 # }
 
 # scrapy-playwright
-DOWNLOAD_HANDLERS = {
-    "http": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
-    "https": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
-}
-TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
+# DOWNLOAD_HANDLERS = {
+#     "http": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
+#     "https": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
+# }
+# TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -98,10 +98,10 @@ TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
 
-FEEDS = {
-    "output.jsonl": {
-        "format": "jsonl",
-        "overwrite": True,
-        "encoding": "utf-8",
-    },
-}
+# FEEDS = {
+#     "output.jsonl": {
+#         "format": "jsonl",
+#         "overwrite": True,
+#         "encoding": "utf-8",
+#     },
+# }
