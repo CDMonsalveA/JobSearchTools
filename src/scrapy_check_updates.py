@@ -29,6 +29,14 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.utils.log import configure_logging
 from scrapy.utils.project import get_project_settings
 
+time_in_minutes: int = 60  # time in minutes to wait before checking for updates
+for i in range(time_in_minutes):
+    print(
+        f"Sleeping for {i} minutes...\n{time_in_minutes - i} minutes left",
+        end="\r",
+    )
+    time.sleep(60)  # sleep for 1 minute
+
 # Set up logging
 logging.basicConfig(
     level=logging.INFO,
@@ -71,7 +79,9 @@ def crawl_job_boards(filepath: str) -> None:
     spiders_names = process.spider_loader.list()
     print(f"Spiders found: {spiders_names}")
     for spider_name in spiders_names:
-        print(f"Running spider: {spider_name} -------------------------------------------")
+        print(
+            f"Running spider: {spider_name} -------------------------------------------"
+        )
         process.crawl(spider_name)
     process.start()
     logger.info(f"Crawled job boards and saved results to {filepath}")
@@ -124,7 +134,9 @@ if new_job_postings != []:
             logger.warning("No link found in the job posting.")
             continue
         chrome_path = "C:/Program Files/Google/Chrome/Application/chrome.exe"
-        webbrowser.register("chrome", None, webbrowser.BackgroundBrowser(chrome_path))
+        webbrowser.register(
+            "chrome", None, webbrowser.BackgroundBrowser(chrome_path)
+        )
         webbrowser.get("chrome").open(job.get("url"))
         # webbrowser.open(job.get("url"))
 else:
