@@ -1,7 +1,6 @@
 from collections.abc import Iterable
 
 import scrapy
-from playwright.sync_api import Page
 from scrapy_playwright.page import PageMethod
 
 from ..items import JobBoardsItem
@@ -77,3 +76,5 @@ class VisaSpider(scrapy.Spider):
         """Handle errors."""
         page = failure.request.meta["playwright_page"]
         await page.close()
+        self.logger.error(f"Request failed: {failure}")
+        self.logger.error(f"Error: {failure.value}")
