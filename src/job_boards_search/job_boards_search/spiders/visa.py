@@ -1,8 +1,8 @@
 from collections.abc import Iterable
 
 import scrapy
-from scrapy_playwright.page import PageMethod
 from playwright.sync_api import Page
+from scrapy_playwright.page import PageMethod
 
 from ..items import JobBoardsItem
 
@@ -30,8 +30,6 @@ class VisaSpider(scrapy.Spider):
             "https": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
         },
         "TWISTED_REACTOR": "twisted.internet.asyncioreactor.AsyncioSelectorReactor",
-        "LOG_LEVEL": "INFO",
-        "LOG_FORMAT": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     }
 
     def start_requests(self):
@@ -46,7 +44,7 @@ class VisaSpider(scrapy.Spider):
                         PageMethod("wait_for_selector", "li.vs-underline"),
                         PageMethod("wait_for_timeout", 2000),
                     ],
-                    'errback': self.errback,
+                    "errback": self.errback,
                 },
                 callback=self.parse,
             )
@@ -61,12 +59,16 @@ class VisaSpider(scrapy.Spider):
         # Extract jobs
         jobs = response.css("li.vs-underline")
         for job in jobs[:5]:
-            item = JobBoardsItem() # company, title, location, date, jobID, url
+            item = JobBoardsItem()  # company, title, location, date, jobID, url
             item["company"] = "Visa"
             item["title"] = job.css("h2 a::text").get()
-            item["location"] = job.css("p span:contains('Location') + span::text").get()
-            item["date"] = 'N/A'
-            item["jobID"] = job.css("p span:contains('Job #') + span::text").get()
+            item["location"] = job.css(
+                "p span:contains('Location') + span::text"
+            ).get()
+            item["date"] = "N/A"
+            item["jobID"] = job.css(
+                "p span:contains('Job #') + span::text"
+            ).get()
             item["url"] = job.css("h2 a::attr(href)").get()
 
             yield item
@@ -75,5 +77,3 @@ class VisaSpider(scrapy.Spider):
         """Handle errors."""
         page = failure.request.meta["playwright_page"]
         await page.close()
-
-                    
