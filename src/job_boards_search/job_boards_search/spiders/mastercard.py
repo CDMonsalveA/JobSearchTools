@@ -19,6 +19,7 @@ class MastercardSpider(scrapy.Spider):
         jobs = jobs[:5]
         for job in jobs:
             item = JobBoardsItem()
+            self.logger.info(f"Job found: {job}")
             item["company"] = "Mastercard"
             item["title"] = job["title"]
             item["location"] = job["city"]

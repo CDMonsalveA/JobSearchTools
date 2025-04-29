@@ -12,27 +12,22 @@ or it opens a web browser with the new job postings.
 It uses the Scrapy framework to crawl job boards and extract job postings.
 """
 
-import datetime
 import json
 import logging
 import os
-import pathlib
-import smtplib
-import ssl
 import sys
 import time
 import webbrowser
-from multiprocessing import Process, Queue
 
 import scrapy
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.log import configure_logging
 from scrapy.utils.project import get_project_settings
 
-time_in_minutes: int = 60  # time in minutes to wait before checking for updates
+time_in_minutes: int = 30  # time in minutes to wait before checking for updates
 for i in range(time_in_minutes):
     print(
-        f"Sleeping for {i} minutes...\n{time_in_minutes - i} minutes left",
+        f"Sleeping for {i} minutes - {time_in_minutes - i} minutes left",
         end="\r",
     )
     time.sleep(60)  # sleep for 1 minute
