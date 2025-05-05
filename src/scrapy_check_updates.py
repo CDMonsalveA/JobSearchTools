@@ -24,7 +24,7 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.utils.log import configure_logging
 from scrapy.utils.project import get_project_settings
 
-time_in_minutes: int = 10  # time in minutes to wait before checking for updates
+time_in_minutes: int = 0  # time in minutes to wait before checking for updates
 for i in range(time_in_minutes):
     print(
         f"------ Spider has slept for {i} minutes - {time_in_minutes - i} minutes left ------",

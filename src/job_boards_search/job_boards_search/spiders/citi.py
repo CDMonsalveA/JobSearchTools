@@ -25,3 +25,8 @@ class CitiSpider(scrapy.Spider):
             item["url"] = response.urljoin(job.xpath(".//@href").get())
 
             yield item
+
+        next_page = response.css("a.next::attr(href)").get()
+        if next_page:
+            yield response.follow(next_page, self.parse)
+        

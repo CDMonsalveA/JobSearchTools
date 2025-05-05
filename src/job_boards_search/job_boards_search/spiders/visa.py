@@ -57,7 +57,7 @@ class VisaSpider(scrapy.Spider):
 
         # Extract jobs
         jobs = response.css("li.vs-underline")
-        for job in jobs[:5]:
+        for job in jobs:
             item = JobBoardsItem()  # company, title, location, date, jobID, url
             item["company"] = "Visa"
             item["title"] = job.css("h2 a::text").get()
