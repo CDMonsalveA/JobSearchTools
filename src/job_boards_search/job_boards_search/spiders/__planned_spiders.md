@@ -8,6 +8,7 @@ This is a list of job boards that we plan to scrape in the future. The list is n
 
 - [Magneto365](https://www.magneto365.com/co/empresas/)
 - [Magneto-sitemap-empresas](https://sitemaps.magneto365.com/sitemap-jobsites.xml)
+- [Allianz](https://careers.allianz.com/global/search?searchby=location&createNewAlert=false&q=&locationsearch=Colombia&optionsFacetsDD_department=&optionsFacetsDD_shifttype=&optionsFacetsDD_customfield3=&optionsFacetsDD_customfield2=&optionsFacetsDD_facility=&optionsFacetsDD_customfield4=&optionsFacetsDD_dept=&inputSearchValue=Colombia&quatFlag=false)
 
 ### Dinamic js job boards
 

@@ -13,9 +13,9 @@ class ScotiabankSpider(scrapy.Spider):
         for job in jobs[:5]:
             item = JobBoardsItem()
             item["company"] = "Scotiabank"
-            item["title"] = job.css("a.jobTitle-link::text").get()
-            item["location"] = job.css("span.jobLocation::text").get()
-            item["date"] = job.css("span.jobDate::text").get()
+            item["title"] = job.css("a.jobTitle-link::text").get().strip()
+            item["location"] = job.css("span.jobLocation::text").get().strip()
+            item["date"] = job.css("span.jobDate::text").get().strip()
             item["jobID"] = job.css("a.jobTitle-link::attr(href)").get().split("/")[-1]
             item["url"] = 'https://jobs.scotiabank.com' + job.css("a.jobTitle-link::attr(href)").get()
             yield item

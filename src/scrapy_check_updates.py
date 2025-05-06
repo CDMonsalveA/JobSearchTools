@@ -24,27 +24,28 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.utils.log import configure_logging
 from scrapy.utils.project import get_project_settings
 
-time_in_minutes: int = 0  # time in minutes to wait before checking for updates
-for i in range(time_in_minutes):
-    print(
-        f"------ Spider has slept for {i} minutes - {time_in_minutes - i} minutes left ------",
-        end="\r",
-    )
-    time.sleep(60)  # sleep for 1 minute
-
-# Set up logging
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
+logger.info("Starting the script...")
 
-# Set up the path to the project directory
-project_dir = os.path.dirname(os.path.abspath(__file__))
-project_dir = os.path.join(project_dir, "job_boards_search")
-sys.path.append(project_dir)
-# Now the project_dir is the path to the job_boards_search directory
+
+def count_minutes(time_in_minutes: int = 30) -> None:
+    for i in range(time_in_minutes):
+        print(
+            f"------ Spider has slept for {i} minutes - {time_in_minutes - i} minutes left ------",
+            end="\r",
+        )
+        time.sleep(60)
+
+
+def setup_directory(__file__):
+    project_dir = os.path.dirname(os.path.abspath(__file__))
+    project_dir = os.path.join(project_dir, "job_boards_search")
+    sys.path.append(project_dir)
 
 
 def crawl_job_boards(filepath: str) -> None:
@@ -75,7 +76,7 @@ def crawl_job_boards(filepath: str) -> None:
     print(f"Spiders found: {spiders_names}")
     for spider_name in spiders_names:
         print(
-            f"Running spider: {spider_name} -------------------------------------------"
+            f"----------- Running spider: {spider_name} -----------------------------------------------------------"
         )
         process.crawl(spider_name)
     process.start()
@@ -95,6 +96,8 @@ def delete_old_file(filepath: str) -> None:
     else:
         logger.info(f"File not found, nothing to delete: {filepath}")
 
+count_minutes(0)
+setup_directory(__file__)
 
 if not os.path.exists("old.jsonl"):
     crawl_job_boards("old.jsonl")
@@ -137,6 +140,13 @@ if new_job_postings != []:
 else:
     logger.info("No new job postings found.")
 
+# Open https://career17.sapsf.com/career?company=atodahoras&career%5fns=job%5flisting%5fsummary&navBarLevel=JOB%5fSEARCH&site=VjItaHJ4VmtnZEVBOWFWWnB1V2tIMmtRZz09&_s.crb=iTzVgD4C72fvRMI6e%2bavYRNLfzk7iGOLh49O0i49n8U%3d
+
+chrome_path = "C:/Program Files/Google/Chrome/Application/chrome.exe"
+webbrowser.register("chrome", None, webbrowser.BackgroundBrowser(chrome_path))
+webbrowser.get("chrome").open(
+    "https://career17.sapsf.com/career?company=atodahoras&career%5fns=job%5flisting%5fsummary&navBarLevel=JOB%5fSEARCH&site=VjItaHJ4VmtnZEVBOWFWWnB1V2tIMmtRZz09&_s.crb=iTzVgD4C72fvRMI6e%2bavYRNLfzk7iGOLh49O0i49n8U%3d"
+)
 # Move new.jsonl to old.jsonl
 delete_old_file("old.jsonl")
 os.rename("new.jsonl", "old.jsonl")
