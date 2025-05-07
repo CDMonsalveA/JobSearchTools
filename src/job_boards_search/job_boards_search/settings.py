@@ -12,8 +12,8 @@ BOT_NAME = "job_boards_search"
 SPIDER_MODULES = ["job_boards_search.spiders"]
 NEWSPIDER_MODULE = "job_boards_search.spiders"
 
-LOG_LEVEL = "INFO"
-LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+# LOG_LEVEL = "INFO"
+# LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = "job_boards_search (+http://www.yourdomain.com)"
@@ -91,14 +91,6 @@ ROBOTSTXT_OBEY = False
 # Set settings whose default value is deprecated to a future-proof value
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
-
-# FEEDS = {
-#     "output.jsonl": {
-#         "format": "jsonl",
-#         "overwrite": True,
-#         "encoding": "utf-8",
-#     },
-# }
 
 # ------------ scrapy-playwright -----------
 # PLAYWRIGHT_BROWSER_TYPE = "firefox"

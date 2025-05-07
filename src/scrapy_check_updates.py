@@ -21,15 +21,14 @@ import webbrowser
 
 import scrapy
 from scrapy.crawler import CrawlerProcess
-from scrapy.utils.log import configure_logging
 from scrapy.utils.project import get_project_settings
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-)
+# logging.basicConfig(
+#     level=logging.INFO,
+#     format="%(asctime)s - %(levelname)s - %(message)s",
+# )
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+# logger.setLevel(logging.INFO)
 logger.info("Starting the script...")
 
 

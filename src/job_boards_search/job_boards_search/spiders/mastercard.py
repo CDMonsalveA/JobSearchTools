@@ -1,3 +1,4 @@
+import datetime
 import json
 
 import jmespath
@@ -39,7 +40,11 @@ class MastercardSpider(scrapy.Spider):
             item["company"] = "Mastercard"
             item["title"] = job["title"]
             item["location"] = job["city"]
-            item["date"] = job["dateCreated"]
+            # example of job["dateCreated"] 2025-04-07T14:15:14.202+0000
+            item["date"] = datetime.datetime.strptime(
+                job["dateCreated"], "%Y-%m-%dT%H:%M:%S.%f%z"
+            ).strftime("%Y-%m-%d")
             item["jobID"] = job["jobId"]
             item["url"] = job["applyUrl"]
+
             yield item
