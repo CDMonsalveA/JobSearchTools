@@ -60,7 +60,6 @@ def crawl_job_boards(filepath: str) -> None:
     settings = get_project_settings()
     settings.set("SPIDER_MODULES", ["job_boards_search.spiders"])
     settings.set("NEWSPIDER_MODULE", "job_boards_search.spiders")
-    settings.set("LOG_LEVEL", "INFO")
     settings.set(
         "FEEDS",
         {
