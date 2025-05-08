@@ -40,7 +40,6 @@ class MastercardSpider(scrapy.Spider):
             item["company"] = "Mastercard"
             item["title"] = job["title"]
             item["location"] = job["city"]
-            # example of job["dateCreated"] 2025-04-07T14:15:14.202+0000
             item["date"] = datetime.datetime.strptime(
                 job["dateCreated"], "%Y-%m-%dT%H:%M:%S.%f%z"
             ).strftime("%Y-%m-%d")

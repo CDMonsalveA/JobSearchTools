@@ -94,7 +94,8 @@ def delete_old_file(filepath: str) -> None:
     else:
         logger.info(f"File not found, nothing to delete: {filepath}")
 
-count_minutes(0)
+
+count_minutes(60)
 setup_directory(__file__)
 
 if not os.path.exists("old.jsonl"):
@@ -134,23 +135,20 @@ if new_job_postings != []:
             "chrome", None, webbrowser.BackgroundBrowser(chrome_path)
         )
         webbrowser.get("chrome").open(job.get("url"))
-        # webbrowser.open(job.get("url"))
 else:
     logger.info("No new job postings found.")
 
-# Open https://career17.sapsf.com/career?company=atodahoras&career%5fns=job%5flisting%5fsummary&navBarLevel=JOB%5fSEARCH&site=VjItaHJ4VmtnZEVBOWFWWnB1V2tIMmtRZz09&_s.crb=iTzVgD4C72fvRMI6e%2bavYRNLfzk7iGOLh49O0i49n8U%3d
-
 chrome_path = "C:/Program Files/Google/Chrome/Application/chrome.exe"
+
+extra_links_list = [
+    "https://profile.magneto365.com/profile/jobs/search?version=1.0&device=desktop&paginator[page]=1&paginator[pageSize]=20&order[field]=publish_date&order[order]=DESC&filters[country_id][0]=47",
+    "https://career17.sapsf.com/career?company=atodahoras&career%5fns=job%5flisting%5fsummary&navBarLevel=JOB%5fSEARCH&site=VjItaHJ4VmtnZEVBOWFWWnB1V2tIMmtRZz09&_s.crb=iTzVgD4C72fvRMI6e%2bavYRNLfzk7iGOLh49O0i49n8U%3d",
+]
 webbrowser.register("chrome", None, webbrowser.BackgroundBrowser(chrome_path))
-webbrowser.get("chrome").open(
-    "https://career17.sapsf.com/career?company=atodahoras&career%5fns=job%5flisting%5fsummary&navBarLevel=JOB%5fSEARCH&site=VjItaHJ4VmtnZEVBOWFWWnB1V2tIMmtRZz09&_s.crb=iTzVgD4C72fvRMI6e%2bavYRNLfzk7iGOLh49O0i49n8U%3d"
-)
+for link in extra_links_list:
+    webbrowser.get("chrome").open(link)
+    logger.info(f"Opened link: {link}")
 # Move new.jsonl to old.jsonl
 delete_old_file("old.jsonl")
 os.rename("new.jsonl", "old.jsonl")
 logger.info("Moved new.jsonl to old.jsonl")
-
-
-# Solution at https://stackoverflow.com/questions/41495052/scrapy-reactor-not-restartable
-# to avoid the reactor already started error
-# twisted.internet.error.ReactorNotRestartable
