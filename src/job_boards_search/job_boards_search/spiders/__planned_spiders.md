@@ -4,6 +4,8 @@ This is a list of job boards that we plan to scrape in the future. The list is n
 
 ## Job boards to scrape
 
+- Bavaria
+
 ### Standard html job boards
 
 - [Magneto365](https://www.magneto365.com/co/empresas/)
@@ -15,13 +17,5 @@ This is a list of job boards that we plan to scrape in the future. The list is n
 
 - [Grupo Aval](https://career17.sapsf.com/career?company=atodahoras&career%5fns=job%5flisting%5fsummary&navBarLevel=JOB%5fSEARCH&site=VjItaHJ4VmtnZEVBOWFWWnB1V2tIMmtRZz09&_s.crb=iTzVgD4C72fvRMI6e%2bavYRNLfzk7iGOLh49O0i49n8U%3d)
 
-<!-- meta={
-   ...:                     "playwright": True,
-   ...:                     "playwright_include_page": True,
-   ...:                     "playwright_page_methods": [
-   ...:                     PageMethod("wait_for_selector", "a.jobTitle"),
-   ...:                         PageMethod("evaluate", "window.scrollTo(0, document.body.scrollHeight)"),
-   ...:                         PageMethod("wait_for_timeout", 10*1000),],
-   ...:                         }) -->
 
 - [IBM](https://www.ibm.com/careers/search?field_keyword_05[0]=Colombia&sort=dcdate_desc)
