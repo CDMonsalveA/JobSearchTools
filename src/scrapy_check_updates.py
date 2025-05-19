@@ -141,7 +141,7 @@ else:
 chrome_path = "C:/Program Files/Google/Chrome/Application/chrome.exe"
 
 extra_links_list = [
-    "https://profile.magneto365.com/profile/jobs/search?version=1.0&device=desktop&paginator[page]=1&paginator[pageSize]=20&order[field]=publish_date&order[order]=DESC&filters[country_id][0]=47",
+    "https://www.magneto365.com/co/empleos?device=desktop&paginator[page]=1&paginator[pageSize]=20&filters[country_id][0]=47&filters[department_id][0]=779@47&q=&order[field]=publish_date&order[order]=DESC",
     "https://career17.sapsf.com/career?company=atodahoras&career%5fns=job%5flisting%5fsummary&navBarLevel=JOB%5fSEARCH&site=VjItaHJ4VmtnZEVBOWFWWnB1V2tIMmtRZz09&_s.crb=iTzVgD4C72fvRMI6e%2bavYRNLfzk7iGOLh49O0i49n8U%3d",
 ]
 webbrowser.register("chrome", None, webbrowser.BackgroundBrowser(chrome_path))
