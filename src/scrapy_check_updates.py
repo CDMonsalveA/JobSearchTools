@@ -73,9 +73,7 @@ def crawl_job_boards(filepath: str) -> None:
     spiders_names = process.spider_loader.list()
     print(f"Spiders found: {spiders_names}")
     for spider_name in spiders_names:
-        print(
-            f"----------- Running spider: {spider_name} -----------------------------------------------------------"
-        )
+        print(f"----------- Running spider: {spider_name} -----------------------------------------------------------")
         process.crawl(spider_name)
     process.start()
     logger.info(f"Crawled job boards and saved results to {filepath}")
@@ -131,9 +129,7 @@ if new_job_postings != []:
             logger.warning("No link found in the job posting.")
             continue
         chrome_path = "C:/Program Files/Google/Chrome/Application/chrome.exe"
-        webbrowser.register(
-            "chrome", None, webbrowser.BackgroundBrowser(chrome_path)
-        )
+        webbrowser.register("chrome", None, webbrowser.BackgroundBrowser(chrome_path))
         webbrowser.get("chrome").open(job.get("url"))
 else:
     logger.info("No new job postings found.")
