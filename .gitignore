@@ -7,3 +7,4 @@ __pycache__/
 *.pyd
 # every python cache file
 *.pdb
+src/job_boards_search/job_boards_search/__pycache__/settings.cpython-311.pyc
