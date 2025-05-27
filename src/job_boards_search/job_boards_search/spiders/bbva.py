@@ -61,7 +61,7 @@ class BbvaSpider(scrapy.Spider):
             item["date"] = job.css("div[data-automation-id='postedOn'] dd::text").get()
             item["jobID"] = job.css("ul[data-automation-id='subtitle'] li::text").get()
             item["url"] = "https://bbva.wd3.myworkdayjobs.com" + job.css("a::attr(href)").get("")
-            if item["location"] == "Publicado hoy":
+            if item["date"] == "Publicado hoy":
                 yield item
 
     async def errback(self, failure):
