@@ -141,6 +141,7 @@ extra_links_list = [
     "https://career17.sapsf.com/career?company=atodahoras&career%5fns=job%5flisting%5fsummary&navBarLevel=JOB%5fSEARCH&site=VjItaHJ4VmtnZEVBOWFWWnB1V2tIMmtRZz09&_s.crb=iTzVgD4C72fvRMI6e%2bavYRNLfzk7iGOLh49O0i49n8U%3d",
     "https://www.linkedin.com/jobs/jam",
     "https://co.indeed.com/?from=gnav-jobseeker-profile--profile-one-frontend",
+    "https://agenciapublicadeempleo.sena.edu.co/spe-web/spe/cartelera",
 ]
 webbrowser.register("chrome", None, webbrowser.BackgroundBrowser(chrome_path))
 for link in extra_links_list:
