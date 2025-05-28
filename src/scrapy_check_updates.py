@@ -93,7 +93,11 @@ def delete_old_file(filepath: str) -> None:
         logger.info(f"File not found, nothing to delete: {filepath}")
 
 
+########################################################################################################################
+
+
 count_minutes(60)
+open_all_links = False
 setup_directory(__file__)
 
 if not os.path.exists("old.jsonl"):
@@ -136,15 +140,29 @@ else:
 
 chrome_path = "C:/Program Files/Google/Chrome/Application/chrome.exe"
 
-extra_links_list = [
-    "https://career17.sapsf.com/career?company=atodahoras&career%5fns=job%5flisting%5fsummary&navBarLevel=JOB%5fSEARCH&site=VjItaHJ4VmtnZEVBOWFWWnB1V2tIMmtRZz09&_s.crb=iTzVgD4C72fvRMI6e%2bavYRNLfzk7iGOLh49O0i49n8U%3d",
+every_run_list = [
     "https://www.magneto365.com/co/empleos?device=desktop&paginator[page]=1&paginator[pageSize]=20&filters[country_id][0]=47&filters[department_id][0]=779@47&q=&order[field]=publish_date&order[order]=DESC",
     "https://www.linkedin.com/jobs/jam",
     "https://co.indeed.com/?from=gnav-jobseeker-profile--profile-one-frontend",
-    "https://agenciapublicadeempleo.sena.edu.co/spe-web/spe/cartelera",
 ]
+ones_a_day_list = [
+    "https://career17.sapsf.com/career?company=atodahoras&career%5fns=job%5flisting%5fsummary&navBarLevel=JOB%5fSEARCH&site=VjItaHJ4VmtnZEVBOWFWWnB1V2tIMmtRZz09&_s.crb=iTzVgD4C72fvRMI6e%2bavYRNLfzk7iGOLh49O0i49n8U%3d",
+    "https://agenciapublicadeempleo.sena.edu.co/spe-web/spe/cartelera",
+    "https://wwww.hiring.cafe/",
+    "https://remoteandtalent.com/joblist",
+    "https://www.weremoto.com/",
+    "https://www.workingnomads.com/jobs?location=colombia",
+]
+
+
+links_list = []
+for link in every_run_list:
+    links_list.append(link)
+for link in ones_a_day_list:
+    if open_all_links:
+        links_list.append(link)
 webbrowser.register("chrome", None, webbrowser.BackgroundBrowser(chrome_path))
-for link in extra_links_list:
+for link in links_list:
     webbrowser.get("chrome").open(link)
     logger.info(f"Opened link: {link}")
 # Move new.jsonl to old.jsonl
