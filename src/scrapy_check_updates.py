@@ -93,7 +93,7 @@ def delete_old_file(filepath: str) -> None:
         logger.info(f"File not found, nothing to delete: {filepath}")
 
 
-# count_minutes(60)
+count_minutes(60)
 setup_directory(__file__)
 
 if not os.path.exists("old.jsonl"):
