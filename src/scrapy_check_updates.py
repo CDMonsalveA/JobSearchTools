@@ -96,7 +96,7 @@ def delete_old_file(filepath: str) -> None:
 ########################################################################################################################
 
 
-count_minutes(60)
+# count_minutes(30)
 open_all_links = False
 setup_directory(__file__)
 
@@ -148,7 +148,7 @@ every_run_list = [
 ones_a_day_list = [
     "https://career17.sapsf.com/career?company=atodahoras&career%5fns=job%5flisting%5fsummary&navBarLevel=JOB%5fSEARCH&site=VjItaHJ4VmtnZEVBOWFWWnB1V2tIMmtRZz09&_s.crb=iTzVgD4C72fvRMI6e%2bavYRNLfzk7iGOLh49O0i49n8U%3d",
     "https://agenciapublicadeempleo.sena.edu.co/spe-web/spe/cartelera",
-    "https://wwww.hiring.cafe/",
+    "https://www.hiring.cafe/",
     "https://remoteandtalent.com/joblist",
     "https://www.weremoto.com/",
     "https://www.workingnomads.com/jobs?location=colombia",
