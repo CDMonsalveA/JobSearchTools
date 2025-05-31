@@ -158,8 +158,8 @@ ones_a_day_list = [
 links_list = []
 for link in every_run_list:
     links_list.append(link)
-for link in ones_a_day_list:
-    if open_all_links:
+if open_all_links:
+    for link in ones_a_day_list:
         links_list.append(link)
 webbrowser.register("chrome", None, webbrowser.BackgroundBrowser(chrome_path))
 for link in links_list:
