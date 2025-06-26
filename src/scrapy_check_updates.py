@@ -97,7 +97,7 @@ def delete_old_file(filepath: str) -> None:
 
 
 # count_minutes(30)
-open_all_links = False
+open_all_links = True
 setup_directory(__file__)   
 
 if not os.path.exists("old.jsonl"):
