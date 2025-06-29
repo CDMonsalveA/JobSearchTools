@@ -98,7 +98,7 @@ def delete_old_file(filepath: str) -> None:
 
 # count_minutes(30)
 open_all_links = True
-setup_directory(__file__)   
+setup_directory(__file__)
 
 if not os.path.exists("old.jsonl"):
     crawl_job_boards("old.jsonl")
@@ -144,6 +144,7 @@ every_run_list = [
     "https://www.magneto365.com/co/empleos?device=desktop&paginator[page]=1&paginator[pageSize]=20&filters[country_id][0]=47&filters[department_id][0]=779@47&q=&order[field]=publish_date&order[order]=DESC",
     "https://www.linkedin.com/jobs/jam",
     "https://co.indeed.com/?from=gnav-jobseeker-profile--profile-one-frontend",
+    "https://torre.ai/search/jobs?q=bestfor%3Acristianmonsalve7",
 ]
 ones_a_day_list = [
     "https://career17.sapsf.com/career?company=atodahoras&career%5fns=job%5flisting%5fsummary&navBarLevel=JOB%5fSEARCH&site=VjItaHJ4VmtnZEVBOWFWWnB1V2tIMmtRZz09&_s.crb=iTzVgD4C72fvRMI6e%2bavYRNLfzk7iGOLh49O0i49n8U%3d",
