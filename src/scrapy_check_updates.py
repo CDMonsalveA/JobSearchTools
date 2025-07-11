@@ -172,4 +172,4 @@ os.rename("new.jsonl", "old.jsonl")
 logger.info("Moved new.jsonl to old.jsonl")
 
 # cd .\src\job_boards_search\
-# & c:/Users/User/Documents/Proyectos/JobSearchTools/.venv/Scripts/python.exe c:/Users/User/Documents/Proyectos/JobSearchTools/src/scrapy_check_updates.py
+# python ..\scrapy_check_updates.py
