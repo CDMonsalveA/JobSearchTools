@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "jobsearchtools"
+version = "0.1.0"
+description = "Set of tools I used on my own personal job search"
+authors = ["CDMonsalveA <122051013+CDMonsalveA@users.noreply.github.com>"]
+readme = "README.md"
+packages = [
+    {include = "src"},
+]
+
+[tool.poetry.dependencies]
+python = ">=3.11,<4.0"
+scrapy = ">=2.13.3,<3.0.0"
+scrapy-playwright = ">=0.0.43,<0.0.44"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.1"
+mkdocs = "^1.6.1"
+ruff = "^0.12.4"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+extend-include = ["*.ipynb"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "C90", "I", "N", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--strict-markers --strict-config --tb=short"
+python_files = "test_*.py"
