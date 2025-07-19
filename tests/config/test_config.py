@@ -84,3 +84,8 @@ class TestConfig:
         cfg._config = new_cfg
         assert cfg.get("foo") == "bar"
         assert cfg.config == new_cfg
+
+    def test_config_init_with_custom_dict(self):
+        custom = {"custom_key": "custom_value"}
+        cfg = Config(custom)
+        assert cfg.get("custom_key") == "custom_value"
