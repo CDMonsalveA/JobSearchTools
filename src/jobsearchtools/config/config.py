@@ -56,9 +56,10 @@ class Config:
             config (dict[str, Any], optional): A dictionary containing settings.
                 If None, the default configuration will be used.
         """
-        if config is None:
-            config = {}
         self._config = deepcopy(self.default_config)
+        if config is not None:
+            # Shallow update: custom keys/values will overwrite defaults
+            self._config.update(config)
         logger.debug(f"Configuration initialized: {self._config}")
 
     def get(self, key: str, default: Any = None) -> Any:
