@@ -63,5 +63,5 @@
         "*.pyi": "python",
         "pyproject.toml": "toml",
         "poetry.lock": "toml"
-    },    
+    },
 }
