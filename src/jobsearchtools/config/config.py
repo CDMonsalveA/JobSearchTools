@@ -33,6 +33,7 @@ class Config:
         },
         # Scrapy configuration
         "scrapy": {
+            "bot_name": "job_scraper",
             "project_dir": str(Path("src/jobsearchtools/job_scraper").resolve()),
             "spiders_dir": str(
                 Path("src/jobsearchtools/job_scraper/spiders").resolve()
