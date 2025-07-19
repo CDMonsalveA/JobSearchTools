@@ -1,23 +1,94 @@
-[project]
+[tool.poetry]
 name = "jobsearchtools"
 version = "0.1.0"
-description = "Set of tools I used on my own job search"
-authors = [
-    {name = "CDMonsalveA",email = "cdmonsalvea1@gmail.com"}
-]
-license = {text = "MIT Licence"}
+description = "Set of tools I used on my own personal job search"
+authors = ["CDMonsalveA <122051013+CDMonsalveA@users.noreply.github.com>"]
 readme = "README.md"
-requires-python = ">=3.11"
-dependencies = [
-    "selenium (>=4.31.0,<5.0.0)",
-    "httpx[http2] (>=0.28.1,<0.29.0)",
-    "parsel (>=1.10.0,<2.0.0)",
-    "scrapy (>=2.12.0,<3.0.0)",
-    "ipython (>=9.1.0,<10.0.0)",
-    "scrapy-playwright (>=0.0.43,<0.0.44)"
+license = "MIT"
+homepage = "https://github.com/CDMonsalveA/jobsearchtools"
+repository = "https://github.com/CDMonsalveA/jobsearchtools"
+packages = [
+    {include = "src"},
 ]
 
+[tool.poetry.dependencies]
+python = ">=3.11,<4.0"
+scrapy = ">=2.13.3,<3.0.0"
+scrapy-playwright = ">=0.0.43,<0.0.44"
+ipython = "^9.4.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.1"
+mkdocs = "^1.6.1"
+ruff = "^0.12.4"
+pytest-cov = "^6.2.1"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+extend-include = ["*.ipynb"]
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "N",    # pep8-naming
+    "UP",   # pyupgrade
+    "B",    # flake8-bugbear
+    "C90",  # mccabe
+    "S",    # flake8-bandit
+    "T20",  # flake8-print
+    "SIM",  # flake8-simplify
+]
+ignore = [
+    "S101",  # Use of assert detected
+    "T201",  # print found
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101", "T201"]  # Allow assert and print in tests
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--strict-markers --strict-config --tb=short --cov=src --cov-report=html --cov-report=term-missing"
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+markers = [
+    "slow: marks tests as slow",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+]
+
+[tool.coverage.run]
+source = ["src"]
+omit = [
+    "tests/*",
+    "src/*/settings.py",
+    "src/*/pipelines.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+]

@@ -1,10 +1,4 @@
-# every python cache file
+# Byte-compiled / optimized / DLL files
 __pycache__/
-**.pyc
-# every python cache file
+*.py[cod]
 *.pyo
-# every python cache file
-*.pyd
-# every python cache file
-*.pdb
-src/job_boards_search/job_boards_search/__pycache__/settings.cpython-311.pyc
