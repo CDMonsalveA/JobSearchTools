@@ -19,7 +19,6 @@ ipython = "^9.4.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.4.1"
-
 mkdocs = "^1.6.1"
 ruff = "^0.12.4"
 pytest-cov = "^6.2.1"
