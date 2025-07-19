@@ -8,7 +8,7 @@ license = "MIT"
 homepage = "https://github.com/CDMonsalveA/jobsearchtools"
 repository = "https://github.com/CDMonsalveA/jobsearchtools"
 packages = [
-    {include = "src"},
+    {include = "jobsearchtools", from = "src"},
 ]
 
 [tool.poetry.dependencies]
