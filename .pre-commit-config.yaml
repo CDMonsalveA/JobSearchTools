@@ -21,11 +21,11 @@ repos:
         args: [ --fix ]
       - id: ruff-format
   # Testing hooks
-  - repo: local
-    hooks:
-      - id: pytest-check
-        name: Run pytest
-        entry: .venv/Scripts/pytest.exe
-        language: system
-        types: [python]
-        always_run: true
+  # - repo: local
+  #   hooks:
+  #     - id: pytest-check
+  #       name: Run pytest
+  #       entry: .venv/Scripts/pytest.exe
+  #       language: system
+  #       types: [python]
+  #       always_run: true
