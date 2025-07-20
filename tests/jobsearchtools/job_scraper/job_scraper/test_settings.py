@@ -1,5 +1,4 @@
-import src.jobsearchtools.job_scraper.job_scraper.settings as settings
-
+import jobsearchtools.job_scraper.job_scraper.settings as settings
 from jobsearchtools.config.config import config
 
 
