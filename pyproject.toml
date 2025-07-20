@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "jobsearchtools"
-version = "0.1.0"
+version = "0.0.1"
 description = "Set of tools I used on my own personal job search"
 authors = ["CDMonsalveA <122051013+CDMonsalveA@users.noreply.github.com>"]
 readme = "README.md"
@@ -8,7 +8,7 @@ license = "MIT"
 homepage = "https://github.com/CDMonsalveA/jobsearchtools"
 repository = "https://github.com/CDMonsalveA/jobsearchtools"
 packages = [
-    {include = "src"},
+    {include = "jobsearchtools", from = "src"},
 ]
 
 [tool.poetry.dependencies]
@@ -16,12 +16,14 @@ python = ">=3.11,<4.0"
 scrapy = ">=2.13.3,<3.0.0"
 scrapy-playwright = ">=0.0.43,<0.0.44"
 ipython = "^9.4.0"
+dotenv = "^0.9.9"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.4.1"
 mkdocs = "^1.6.1"
 ruff = "^0.12.4"
 pytest-cov = "^6.2.1"
+pre-commit = "^4.2.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
@@ -63,7 +65,8 @@ line-ending = "auto"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "--strict-markers --strict-config --tb=short --cov=src --cov-report=html --cov-report=term-missing"
+addopts = "--import-mode=importlib --strict-markers --strict-config --tb=short --cov=src --cov-report=html --cov-report=term-missing"
+pythonpath = ["src"]
 python_files = "test_*.py"
 python_classes = "Test*"
 python_functions = "test_*"
