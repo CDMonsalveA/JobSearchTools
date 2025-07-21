@@ -64,4 +64,6 @@
         "pyproject.toml": "toml",
         "poetry.lock": "toml"
     },
+    // Window zoom
+    "window.zoomLevel": -3,
 }
