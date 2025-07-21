@@ -10,7 +10,11 @@ from jobsearchtools.config.config import config
 
 BOT_NAME = config.get("scrapy", {}).get("bot_name", "job_scraper")
 
-SPIDER_MODULES = ["job_scraper.spiders"]
+SPIDER_MODULES = [
+    "job_scraper.spiders",
+    "job_scraper.spiders.static",
+    "job_scraper.spiders.dynamic",
+]
 NEWSPIDER_MODULE = "job_scraper.spiders"
 
 ADDONS = {}
