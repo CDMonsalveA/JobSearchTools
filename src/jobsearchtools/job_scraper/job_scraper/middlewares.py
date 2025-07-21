@@ -3,10 +3,10 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-from scrapy import signals
-
 # useful for handling different item types with a single interface
-from itemadapter import ItemAdapter
+import secrets
+
+from scrapy import signals
 
 
 class JobScraperSpiderMiddleware:
@@ -33,8 +33,7 @@ class JobScraperSpiderMiddleware:
         # it has processed the response.
 
         # Must return an iterable of Request, or item objects.
-        for i in result:
-            yield i
+        yield from result
 
     def process_spider_exception(self, response, exception, spider):
         # Called when a spider or process_spider_input() method
@@ -50,7 +49,7 @@ class JobScraperSpiderMiddleware:
             yield item_or_request
 
     def spider_opened(self, spider):
-        spider.logger.info("Spider opened: %s" % spider.name)
+        spider.logger.info(f"Spider opened: {spider.name}")
 
 
 class JobScraperDownloaderMiddleware:
@@ -97,4 +96,20 @@ class JobScraperDownloaderMiddleware:
         pass
 
     def spider_opened(self, spider):
-        spider.logger.info("Spider opened: %s" % spider.name)
+        spider.logger.info(f"Spider opened: {spider.name}")
+
+
+################################################################################
+# ---------------------------- Custom Middleware ----------------------------- #
+################################################################################
+class SetRandomUserAgentMiddleware:
+    # Middleware to set a random User-Agent for each request
+    def process_request(self, request, spider):
+        user_agents = spider.settings.get("USER_AGENTS", [])
+        if not user_agents:
+            spider.logger.warning("No USER_AGENTS found in settings.")
+            return
+        user_agent = secrets.choice(user_agents)
+        request.headers["User-Agent"] = user_agent
+        spider.logger.info(f"Using User-Agent: {user_agent}")
+        spider.logger.debug(f"Using User-Agent: {user_agent}")

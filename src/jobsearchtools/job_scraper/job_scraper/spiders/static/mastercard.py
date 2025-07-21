@@ -12,6 +12,10 @@ class MastercardSpider(scrapy.Spider):
 
         from ...items import JobScraperItem
 
+        self.logger.info(
+            f"User-Agent: {response.request.headers.get('User-Agent', 'N/A')}"
+        )
+
         self.logger.info(f"Parsing {response.url}")
 
         # Extract embedded JSON from phApp.ddo variable in <script> tag
