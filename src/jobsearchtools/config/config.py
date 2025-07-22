@@ -29,7 +29,7 @@ class Config:
         "db": {
             "type": "sqlite",
             "name": "jobsearchtools.db",
-            "path": str(Path("src/jobsearchtools/db").resolve()),
+            "path": "src/jobsearchtools/db/jobsearchtools.db",
         },
         # Scrapy configuration
         "scrapy": {
