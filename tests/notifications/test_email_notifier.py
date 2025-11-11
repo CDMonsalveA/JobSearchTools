@@ -124,3 +124,96 @@ class TestEmailNotifier:
         assert "https://test.com/job" in html
         assert "<!DOCTYPE html>" in html
         assert "<body>" in html
+
+    def test_generate_html_email_with_total_found(self, mock_settings):
+        """Test HTML email generation with total found count."""
+        notifier = EmailNotifier()
+        jobs = [
+            {
+                "title": "Software Engineer",
+                "company": "TestCorp",
+                "location": "Bogotá",
+                "url": "https://test.com/job",
+            }
+        ]
+
+        html = notifier._generate_html_email(jobs, "test_spider", total_found=5)
+
+        # Verify HTML contains statistics
+        assert "1" in html  # new count
+        assert "5" in html  # total found
+        assert "duplicate" in html.lower()
+        assert "<!DOCTYPE html>" in html
+
+    @patch("smtplib.SMTP")
+    def test_send_notification_with_total_found(self, mock_smtp, mock_settings):
+        """Test email sending with total found count."""
+        notifier = EmailNotifier()
+        jobs = [{"title": "Test Job", "company": "TestCorp"}]
+
+        # Mock SMTP
+        mock_server = MagicMock()
+        mock_smtp.return_value.__enter__.return_value = mock_server
+
+        result = notifier.send_new_jobs_notification(
+            jobs, "test_spider", total_found=10
+        )
+        assert result is True
+
+    @patch("smtplib.SMTP")
+    def test_send_spider_failure_alert(self, mock_smtp, mock_settings):
+        """Test sending spider failure alert."""
+        notifier = EmailNotifier()
+
+        # Mock SMTP
+        mock_server = MagicMock()
+        mock_smtp.return_value.__enter__.return_value = mock_server
+
+        result = notifier.send_spider_failure_alert("test_spider")
+
+        # Verify
+        assert result is True
+        mock_smtp.assert_called_once_with("smtp.test.com", 587)
+        mock_server.starttls.assert_called_once()
+        mock_server.login.assert_called_once()
+        mock_server.sendmail.assert_called_once()
+
+        # Check the email subject contains alert
+        call_args = mock_server.sendmail.call_args
+        email_content = call_args[0][2]
+        assert "ALERT" in email_content
+        # Spider name may be uppercased in subject
+        assert "test_spider" in email_content.lower()
+
+    def test_send_spider_failure_alert_disabled(self, mock_settings):
+        """Test failure alert when notifications disabled."""
+        mock_settings.email.enabled = False
+        notifier = EmailNotifier()
+
+        result = notifier.send_spider_failure_alert("test_spider")
+        assert result is False
+
+    @patch("smtplib.SMTP")
+    def test_send_spider_failure_alert_smtp_error(self, mock_smtp, mock_settings):
+        """Test failure alert with SMTP error."""
+        notifier = EmailNotifier()
+
+        # Mock SMTP to raise error
+        mock_smtp.side_effect = Exception("SMTP Error")
+
+        result = notifier.send_spider_failure_alert("test_spider")
+        assert result is False
+
+    def test_generate_failure_alert_email(self, mock_settings):
+        """Test failure alert email generation."""
+        notifier = EmailNotifier()
+
+        html = notifier._generate_failure_alert_email("test_spider")
+
+        # Verify HTML contains key elements
+        assert "test_spider" in html
+        assert "0 job listings" in html
+        assert "⚠️" in html or "warning" in html.lower()
+        assert "<!DOCTYPE html>" in html
+        assert "<body>" in html
+        assert "Recommended Actions" in html
