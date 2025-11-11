@@ -61,9 +61,11 @@ class EmailNotificationExtension:
         """
         new_jobs = self.stats.get_value("new_jobs", [])
         new_jobs_count = self.stats.get_value("new_jobs_count", 0)
+        total_found = self.stats.get_value("item_scraped_count", 0)
 
         logger.info(
-            f"Spider {spider.name} closed. Reason: {reason}. New jobs: {new_jobs_count}"
+            f"Spider {spider.name} closed. Reason: {reason}. "
+            f"Total found: {total_found}, New jobs: {new_jobs_count}"
         )
 
         if new_jobs:
