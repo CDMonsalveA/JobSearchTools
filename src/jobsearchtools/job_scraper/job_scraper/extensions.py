@@ -53,7 +53,7 @@ class EmailNotificationExtension:
         """
         Called when a spider is closed.
 
-        Sends email notification if new jobs were found.
+        Sends email notification if new jobs were found or alerts if no jobs found.
 
         Args:
             spider: The spider instance that closed.
@@ -61,17 +61,34 @@ class EmailNotificationExtension:
         """
         new_jobs = self.stats.get_value("new_jobs", [])
         new_jobs_count = self.stats.get_value("new_jobs_count", 0)
+        items_scraped = self.stats.get_value("item_scraped_count", 0)
 
         logger.info(
-            f"Spider {spider.name} closed. Reason: {reason}. New jobs: {new_jobs_count}"
+            f"Spider {spider.name} closed. Reason: {reason}. "
+            f"Total found: {items_scraped}, New jobs: {new_jobs_count}"
         )
 
+        # Send notification if new jobs were found
         if new_jobs:
-            success = email_notifier.send_new_jobs_notification(new_jobs, spider.name)
+            success = email_notifier.send_new_jobs_notification(
+                new_jobs, spider.name, items_scraped
+            )
             if success:
-                logger.info(f"Email notification sent for {new_jobs_count} new jobs")
+                logger.info(
+                    f"Email notification sent for {new_jobs_count} new jobs "
+                    f"out of {items_scraped} total found"
+                )
             else:
                 logger.warning("Failed to send email notification")
+        # Send alert if no jobs found (potential spider failure)
+        elif reason == "finished" and items_scraped == 0:
+            success = email_notifier.send_spider_failure_alert(spider.name)
+            if success:
+                logger.info(
+                    f"Failure alert sent: Spider {spider.name} found no jobs"
+                )
+            else:
+                logger.warning("Failed to send failure alert email")
 
 
 class SpiderHealthMonitorExtension:
