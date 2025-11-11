@@ -2,7 +2,6 @@
 __pycache__/
 *.py[cod]
 *$py.class
-*.pyo
 
 # C extensions
 *.so
@@ -88,7 +87,7 @@ ipython_config.py
 Pipfile.lock
 
 # poetry
-poetry.lock
+# poetry.lock  # NEEDED for Docker build
 
 # pdm
 .pdm.toml
@@ -142,4 +141,3 @@ logs/
 cache/
 data/
 old.jsonl
-backups/

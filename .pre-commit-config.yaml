@@ -20,7 +20,14 @@ repos:
       - id: ruff-check
         args: [ --fix ]
       - id: ruff-format
-  # Testing hooks
+  # Docker file checks
+  - repo: https://github.com/hadolint/hadolint
+    rev: v2.12.0
+    hooks:
+      - id: hadolint-docker
+        args: ["--ignore", "DL3008", "--ignore", "DL3013"]
+
+  # Testing hooks (optional - uncomment to run tests on commit)
   # - repo: local
   #   hooks:
   #     - id: pytest-check
@@ -28,4 +35,5 @@ repos:
   #       entry: .venv/Scripts/pytest.exe
   #       language: system
   #       types: [python]
-  #       always_run: true
+  #       pass_filenames: false
+  #       always_run: false

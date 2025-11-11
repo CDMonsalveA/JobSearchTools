@@ -1,0 +1,110 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: jobsearchtools_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-jobsearchtools}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Database password required}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - jobsearch_network
+
+  # JobSearchTools Scheduler
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jobsearchtools_scheduler
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      # Application
+      PROJECT_NAME: ${PROJECT_NAME:-JobSearchTools}
+      ENVIRONMENT: ${ENVIRONMENT:-production}
+      DEBUG: ${DEBUG:-False}
+
+      # Database
+      DB_TYPE: postgresql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-jobsearchtools}
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:?Database password required}
+      DB_POOL_SIZE: ${DB_POOL_SIZE:-5}
+      DB_MAX_OVERFLOW: ${DB_MAX_OVERFLOW:-10}
+
+      # Email
+      EMAIL_ENABLED: ${EMAIL_ENABLED:-True}
+      EMAIL_SMTP_HOST: ${EMAIL_SMTP_HOST:-smtp.gmail.com}
+      EMAIL_SMTP_PORT: ${EMAIL_SMTP_PORT:-587}
+      EMAIL_SMTP_USER: ${EMAIL_SMTP_USER:?Email user required}
+      EMAIL_SMTP_PASSWORD: ${EMAIL_SMTP_PASSWORD:?Email password required}
+      EMAIL_FROM_ADDRESS: ${EMAIL_FROM_ADDRESS:-noreply@jobsearchtools.com}
+      EMAIL_TO_ADDRESS: ${EMAIL_TO_ADDRESS:?Email recipient required}
+      EMAIL_USE_TLS: ${EMAIL_USE_TLS:-True}
+
+      # Scheduler
+      SCHEDULER_ENABLED: ${SCHEDULER_ENABLED:-True}
+      SCHEDULER_INTERVAL_HOURS: ${SCHEDULER_INTERVAL_HOURS:-4}
+      SCHEDULER_TIMEZONE: ${SCHEDULER_TIMEZONE:-America/Bogota}
+      SCHEDULER_MAX_INSTANCES: ${SCHEDULER_MAX_INSTANCES:-1}
+
+      # Scrapy
+      SCRAPY_BOT_NAME: ${SCRAPY_BOT_NAME:-job_scraper}
+      SCRAPY_CONCURRENT_REQUESTS_PER_DOMAIN: ${SCRAPY_CONCURRENT_REQUESTS_PER_DOMAIN:-1}
+      SCRAPY_DOWNLOAD_DELAY: ${SCRAPY_DOWNLOAD_DELAY:-1.0}
+      SCRAPY_ROBOTSTXT_OBEY: ${SCRAPY_ROBOTSTXT_OBEY:-True}
+      SCRAPY_LOG_LEVEL: ${SCRAPY_LOG_LEVEL:-INFO}
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+      - ./cache:/app/cache
+    networks:
+      - jobsearch_network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # PgAdmin (Optional - for database management)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: jobsearchtools_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@jobsearchtools.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    depends_on:
+      - postgres
+    networks:
+      - jobsearch_network
+    profiles:
+      - tools
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  jobsearch_network:
+    driver: bridge

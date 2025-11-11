@@ -11,11 +11,11 @@ from jobsearchtools.config.config import config
 BOT_NAME = config.get("scrapy", {}).get("bot_name", "job_scraper")
 
 SPIDER_MODULES = [
-    "job_scraper.spiders",
-    "job_scraper.spiders.static",
-    "job_scraper.spiders.dynamic",
+    "jobsearchtools.job_scraper.job_scraper.spiders",
+    "jobsearchtools.job_scraper.job_scraper.spiders.static",
+    "jobsearchtools.job_scraper.job_scraper.spiders.dynamic",
 ]
-NEWSPIDER_MODULE = "job_scraper.spiders"
+NEWSPIDER_MODULE = "jobsearchtools.job_scraper.job_scraper.spiders"
 
 ADDONS = {}
 
@@ -52,20 +52,25 @@ DOWNLOAD_DELAY = 1
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-    "job_scraper.middlewares.JobScraperDownloaderMiddleware": 543,
-    "job_scraper.middlewares.SetRandomUserAgentMiddleware": 400,
+    "jobsearchtools.job_scraper.job_scraper.middlewares."
+    "JobScraperDownloaderMiddleware": 543,
+    "jobsearchtools.job_scraper.job_scraper.middlewares."
+    "SetRandomUserAgentMiddleware": 400,
 }
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
-# EXTENSIONS = {
-#    "scrapy.extensions.telnet.TelnetConsole": None,
-# }
+EXTENSIONS = {
+    "jobsearchtools.job_scraper.job_scraper.extensions."
+    "EmailNotificationExtension": 500,
+    "jobsearchtools.job_scraper.job_scraper.extensions."
+    "SpiderHealthMonitorExtension": 600,
+}
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    "job_scraper.pipelines.SQLiteUniqueJobsPipeline": 300,
+    "jobsearchtools.job_scraper.job_scraper.pipelines.PostgreSQLPipeline": 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
