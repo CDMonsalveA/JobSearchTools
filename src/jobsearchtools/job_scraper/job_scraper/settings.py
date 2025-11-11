@@ -61,8 +61,7 @@ DOWNLOADER_MIDDLEWARES = {
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
 EXTENSIONS = {
-    "jobsearchtools.job_scraper.job_scraper.extensions."
-    "EmailNotificationExtension": 500,
+    "jobsearchtools.job_scraper.job_scraper.extensions.EmailNotificationExtension": 500,
     "jobsearchtools.job_scraper.job_scraper.extensions."
     "SpiderHealthMonitorExtension": 600,
 }
