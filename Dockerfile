@@ -11,13 +11,15 @@ ENV PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 
 # Install system dependencies for PostgreSQL and Playwright
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     libpq-dev \
+    postgresql-client \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Poetry
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN curl -sSL https://install.python-poetry.org | python3 - \
     && ln -s /root/.local/bin/poetry /usr/local/bin/poetry
 
@@ -29,7 +31,7 @@ RUN poetry config virtualenvs.create false \
     && poetry install --no-interaction --no-ansi --no-root --only main
 
 # Install system dependencies for Playwright browsers
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     libnss3 \
     libnspr4 \
     libatk1.0-0 \
@@ -48,20 +50,18 @@ RUN apt-get update && apt-get install -y \
     libasound2 \
     libatspi2.0-0 \
     libxshmfence1 \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install Playwright browsers (for dynamic spiders)
-RUN playwright install chromium firefox
+    && rm -rf /var/lib/apt/lists/* \
+    && playwright install chromium firefox
 
 # Copy the application code
 COPY src/ ./src/
 COPY README.md ./
+COPY docker-entrypoint.sh /usr/local/bin/
 
-# Install the project itself
-RUN poetry install --no-interaction --no-ansi --only-root
-
-# Create directories for logs and data
-RUN mkdir -p /app/logs /app/data /app/cache
+# Install the project itself, make entrypoint executable, and create directories
+RUN poetry install --no-interaction --no-ansi --only-root \
+    && chmod +x /usr/local/bin/docker-entrypoint.sh \
+    && mkdir -p /app/logs /app/data /app/cache
 
 # Set the Python path
 ENV PYTHONPATH=/app/src
@@ -73,5 +73,5 @@ ENV PYTHONPATH=/app/src
 HEALTHCHECK --interval=30m --timeout=10s --start-period=5s --retries=3 \
     CMD python -c "import psycopg2; conn = psycopg2.connect(host='${DB_HOST}', database='${DB_NAME}', user='${DB_USER}', password='${DB_PASSWORD}'); conn.close()" || exit 1
 
-# Run the scheduler by default
-CMD ["python", "-m", "jobsearchtools.scheduler"]
+# Use custom entrypoint that handles migrations
+ENTRYPOINT ["docker-entrypoint.sh"]
